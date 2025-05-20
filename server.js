@@ -8,8 +8,8 @@ const PORT = 3001;
 app.use(cors());
 
 const MATOMO_API_URL = 'https://analytics.inmapper.com';
-const SITE_ID = ''; 
-const TOKEN = '7014b00d4bc9cbb906138d9c07d2e12f'; 
+const SITE_ID = '';
+const TOKEN = '7014b00d4bc9cbb906138d9c07d2e12f';
 
 
 function getDateParam(req) {
@@ -24,13 +24,13 @@ function getDateParam(req) {
 
 app.get('/api/events/from-to-names', async (req, res) => {
   try {
-    
+
     const { siteId, startDate, endDate } = req.query;
 
-    
-    const site = siteId || SITE_ID; 
 
-    
+    const site = siteId || SITE_ID;
+
+
     const date = startDate && endDate ? `${startDate},${endDate}` : 'last7';
 
     const response = await axios.get(`${MATOMO_API_URL}/index.php`, {
@@ -118,7 +118,7 @@ app.get('/api/user-statistics', async (req, res) => {
       }
     });
 
-    
+
     const bounceRate = visitsResponse.data.bounce_rate;
 
     const deviceResponse = await axios.get(`${MATOMO_API_URL}/index.php`, {
@@ -147,7 +147,7 @@ app.get('/api/user-statistics', async (req, res) => {
 
     res.json({
       totalVisits,
-      bounceRate, 
+      bounceRate,
       mostVisitedDeviceType,
       avgTimeOnPage
     });
@@ -189,7 +189,7 @@ app.get('/api/events/searched-daily', async (req, res) => {
   try {
     const site = req.query.siteId || SITE_ID;
     const date = getDateParam(req);
-    const period = 'day';  
+    const period = 'day';
 
     const response = await axios.get(`${MATOMO_API_URL}/index.php`, {
       params: {
@@ -210,22 +210,22 @@ app.get('/api/events/searched-daily', async (req, res) => {
     const dailyResults = {};
 
     for (const [day, events] of Object.entries(data)) {
-   
+
       const dailyAggregates = {};
 
       events.forEach(event => {
-        const labelKey = event.label.split('>')[1] || event.label;  
+        const labelKey = event.label.split('>')[1] || event.label;
         if (!dailyAggregates[labelKey]) {
           dailyAggregates[labelKey] = {
             label: labelKey,
             total_nb_events: 0
           };
         }
-       
+
         dailyAggregates[labelKey].total_nb_events += event.nb_events;
       });
 
-      
+
       dailyResults[day] = Object.values(dailyAggregates);
     }
 
@@ -256,8 +256,14 @@ app.get('/api/events/touched', async (req, res) => {
       }
     });
 
-    console.log("Touched event name'leri:", response.data);
-    res.json(response.data);
+    // Dönüştürülmüş veri
+    const mappedData = {};
+    response.data.forEach(item => {
+      mappedData[item.label] = item.nb_visits;
+    });
+
+    console.log("Touched event name verisi (dönüştürülmüş):", mappedData);
+    res.json(mappedData);
   } catch (error) {
     console.error("Touched event name verisi alınırken hata:", error.message);
     res.status(500).json({ error: 'Touched event verisi alınamadı' });
@@ -267,40 +273,85 @@ app.get('/api/events/touched', async (req, res) => {
 
 app.get('/api/events/daily-count', async (req, res) => {
   try {
-    const site = req.query.siteId || SITE_ID;
-    let { startDate, endDate } = req.query;
+    // 1. Adım: Gelen tüm sorgu parametrelerini loglayın
+    console.log("Gelen sorgu parametreleri (req.query):", JSON.stringify(req.query, null, 2));
 
+    const site = req.query.siteId || SITE_ID;
+    // 2. Adım: Parametreleri req.query'den alın
+    let startDate = req.query.startDate; // Ayrı startDate parametresini kontrol et
+    let endDate = req.query.endDate;   // Ayrı endDate parametresini kontrol et
+    const dateRangeQuery = req.query.date; // 'date=YYYY-MM-DD,YYYY-MM-DD' formatındaki parametreyi al
+
+    // 3. Adım: Alınan tarih parametrelerini ve türlerini loglayın
+    console.log(`Kontrol öncesi - Gelen startDate: '${startDate}' (türü: ${typeof startDate}), Gelen endDate: '${endDate}' (türü: ${typeof endDate}), Gelen dateRangeQuery: '${dateRangeQuery}' (türü: ${typeof dateRangeQuery})`);
+
+    // Eğer 'date' parametresi gönderildiyse ve startDate/endDate ayrı olarak gönderilmediyse, 'date' parametresini kullan
+    if (dateRangeQuery && !startDate && !endDate) {
+      const dates = dateRangeQuery.split(',');
+      if (dates.length === 2 && dates[0].match(/^\d{4}-\d{2}-\d{2}$/) && dates[1].match(/^\d{4}-\d{2}-\d{2}$/)) {
+        startDate = dates[0];
+        endDate = dates[1];
+        console.log(`'date' parametresinden tarihler başarıyla ayrıştırıldı - startDate: ${startDate}, endDate: ${endDate}`);
+      } else {
+        console.warn(`'date' parametresi ('${dateRangeQuery}') geçersiz formatta veya eksik. Virgülle ayrılmış iki 'YYYY-MM-DD' formatında tarih bekleniyordu. Varsayılan tarihler kullanılacak.`);
+        // startDate ve endDate'i tanımsız bırakarak varsayılan mantığın tetiklenmesini sağla
+        startDate = undefined;
+        endDate = undefined;
+      }
+    }
+
+    // 4. Adım: Eğer startDate veya endDate hala boşsa veya tanımsızsa (yani ne ayrı parametreler ne de geçerli bir 'date' parametresi sağlanmadıysa),
+    // varsayılan olarak son 7 günü kullan.
     if (!startDate || !endDate) {
+      console.log("startDate veya endDate eksik veya 'falsy' (boş, null, undefined) ya da 'date' parametresi geçersiz. Varsayılan olarak son 7 gün kullanılacak.");
+
       const today = new Date();
       const last7Days = new Date(today);
       last7Days.setDate(today.getDate() - 7);
 
       startDate = last7Days.toISOString().split('T')[0];
       endDate = today.toISOString().split('T')[0];
+
+      console.log(`Varsayılan tarihler ayarlandı - startDate: ${startDate}, endDate: ${endDate}`);
+    } else {
+      // Sağlanan (ya da 'date' parametresinden ayrıştırılan) tarihler kullanılıyor
+      console.log(`Sağlanan/Ayrıştırılan tarihler kullanılıyor - startDate: ${startDate}, endDate: ${endDate}`);
     }
 
+    // 6. Adım: Matomo API'sine gönderilecek parametreleri loglayın
+    const matomoParams = {
+      module: 'API',
+      method: 'Events.getName',
+      idSite: site,
+      period: 'day',
+      date: `${startDate},${endDate}`, // Kullanılacak tarih aralığı
+      format: 'JSON',
+      token_auth: TOKEN
+    };
+    console.log("Matomo API'sine gönderilecek parametreler:", matomoParams);
+
     const response = await axios.get(`${MATOMO_API_URL}/index.php`, {
-      params: {
-        module: 'API',
-        method: 'Events.getName',
-        idSite: site,
-        period: 'day',
-        date: `${startDate},${endDate}`,
-        format: 'JSON',
-        token_auth: TOKEN
-      }
+      params: matomoParams
     });
 
-    console.log("Matomo API Yanıtı:", response.data);
+    console.log("Matomo API Yanıtı (response.data):", JSON.stringify(response.data, null, 2));
 
     if (!response.data || typeof response.data !== 'object') {
+      console.error("Matomo API'den geçersiz yanıt formatı alındı.");
       return res.status(500).json({ error: 'Veri işlenemedi, geçersiz yanıt formatı' });
     }
 
     const dailyCounts = Object.entries(response.data).map(([date, events]) => {
       if (!Array.isArray(events)) {
+        console.warn(`'${date}' tarihi için events bir dizi değil:`, events);
         return { date, totalEvents: 0 };
       }
+
+      console.log(`📅 ${date} tarihi için gelen eventler:`);
+      events.forEach(event => {
+        console.log(`Event Detayı:`, JSON.stringify(event, null, 2)); // Event objesini tamamen logla
+        console.log(`  🟢 Kategori: '${event.name}', Olay Sayısı: ${event.nb_events}`);
+      });
 
       const totalEvents = events.reduce((sum, e) => sum + (parseInt(e.nb_events, 10) || 0), 0);
       return { date, totalEvents };
@@ -308,7 +359,16 @@ app.get('/api/events/daily-count', async (req, res) => {
 
     res.json(dailyCounts);
   } catch (error) {
-    console.error("Günlük işlem sayısı alınırken hata:", error.message);
+    console.error("Günlük işlem sayısı alınırken hata:", error.message, error.stack);
+    if (error.isAxiosError) {
+      console.error("Axios Hata Detayları:", {
+        request: error.config,
+        response: error.response ? {
+          status: error.response.status,
+          data: error.response.data
+        } : "Yanıt yok"
+      });
+    }
     res.status(500).json({ error: 'Günlük işlem sayısı verisi alınamadı' });
   }
 });
@@ -468,27 +528,27 @@ app.get('/api/os-distribution', async (req, res) => {
 app.get('/api/user-language-distribution', async (req, res) => {
   try {
     const site = req.query.siteId || SITE_ID;
-    const date = getDateParam(req);  
+    const date = getDateParam(req);
 
-    
+
     const response = await axios.get(`${MATOMO_API_URL}/index.php`, {
       params: {
         module: 'API',
-        method: 'UserLanguage.getLanguageCode',  
+        method: 'UserLanguage.getLanguageCode',
         idSite: site,
         period: 'range',
-        date, 
+        date,
         format: 'JSON',
         token_auth: TOKEN
       }
     });
 
-    
+
     const languageDistribution = {};
 
-  
+
     response.data.forEach(item => {
-      const languageCode = item.label;  
+      const languageCode = item.label;
       const visits = item.nb_visits;
 
       if (languageDistribution[languageCode]) {
@@ -498,7 +558,7 @@ app.get('/api/user-language-distribution', async (req, res) => {
       }
     });
 
- 
+
     res.json(languageDistribution);
   } catch (error) {
     console.error("Dil verisi alınırken hata:", error.message);
