@@ -72,25 +72,24 @@ app.get('/api/events/summary-counts', async (req, res) => {
       }
     });
 
-    const eventActions = ['from->to', 'searched', 'touched'];
     const counts = {
       fromTo: 0,
       searched: 0,
       touched: 0,
+      initialized: 0,
       total: 0
     };
 
     response.data.forEach(item => {
       const label = item.label;
       const count = parseInt(item.nb_events, 10);
-      if (eventActions.includes(label)) {
-        if (label === 'from->to') counts.fromTo = count;
-        if (label === 'searched') counts.searched = count;
-        if (label === 'touched') counts.touched = count;
-      }
+      if (label === 'from->to') counts.fromTo = count;
+      if (label === 'searched') counts.searched = count;
+      if (label === 'touched') counts.touched += count;
+      if (label === 'initialized') counts.initialized += count;
     });
 
-    counts.total = counts.fromTo + counts.searched + counts.touched;
+    counts.total = counts.fromTo + counts.searched + counts.touched + counts.initialized;
 
     res.json(counts);
   } catch (error) {
@@ -267,6 +266,57 @@ app.get('/api/events/touched', async (req, res) => {
   } catch (error) {
     console.error("Touched event name verisi alınırken hata:", error.message);
     res.status(500).json({ error: 'Touched event verisi alınamadı' });
+  }
+});
+
+app.get('/api/events/initialized', async (req, res) => {
+  try {
+    const site = req.query.siteId || SITE_ID;
+    const date = getDateParam(req);
+
+    const response = await axios.get(`${MATOMO_API_URL}/index.php`, {
+      params: {
+        module: 'API',
+        method: 'Events.getName',
+        idSite: site,
+        period: 'range',
+        date,
+        format: 'JSON',
+        token_auth: TOKEN,
+        segment: 'eventAction==initialized'
+      }
+    });
+
+    const data = response.data;
+
+    // Verinin geçerliliğini kontrol et
+    if (!Array.isArray(data)) {
+      console.error("Beklenmeyen veri formatı:", data);
+      return res.status(500).json({ error: 'Geçersiz veri formatı' });
+    }
+
+    // Hariç tutulacak başlıklar
+    const excludedTitles = ["web", "mobile-iOS", "mobile-Android"];
+
+    // Dönüştürme: { [label]: nb_visits } formatı
+    const mappedData = {};
+    data.forEach(item => {
+      if (
+        item.label &&
+        typeof item.nb_visits !== 'undefined' &&
+        !excludedTitles.includes(item.label)
+      ) {
+        mappedData[item.label] = item.nb_visits;
+      } else {
+        console.warn("Eksik, hatalı veya dışlanmış öğe atlandı:", item);
+      }
+    });
+
+    console.log("Initialized event name verisi (filtrelenmiş):", mappedData);
+    res.json(mappedData);
+  } catch (error) {
+    console.error("Initialized event verisi alınırken hata:", error.message);
+    res.status(500).json({ error: 'Initialized event verisi alınamadı' });
   }
 });
 
