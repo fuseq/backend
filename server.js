@@ -430,65 +430,50 @@ app.get('/api/hourly-visits', async (req, res) => {
     const { startDate, endDate } = req.query;
 
     const today = new Date().toISOString().split('T')[0];
-    const dateRange = startDate && endDate ? { startDate, endDate } : { startDate: today, endDate: today };
+    const dateRange = startDate && endDate
+      ? { startDate, endDate }
+      : { startDate: today, endDate: today };
+
     const { startDate: start, endDate: end } = dateRange;
 
-    const dailyVisitsPromises = [];
-    const dailyHourlyCounts = [];
-
-    for (let dayOffset = 0; dayOffset < getDaysDifference(start, end); dayOffset++) {
-      const currentDate = new Date(start);
-      currentDate.setDate(currentDate.getDate() + dayOffset);
-      const dateString = currentDate.toISOString().split('T')[0];
-
-      dailyVisitsPromises.push(
-        axios.get(`${MATOMO_API_URL}/index.php`, {
-          params: {
-            module: 'API',
-            method: 'Live.getLastVisitsDetails',
-            idSite: site,
-            period: 'day',
-            date: dateString,
-            format: 'JSON',
-            filter_limit: 1000,
-            token_auth: TOKEN
-          }
-        })
-      );
-    }
-
-    const dailyVisitsResponses = await Promise.all(dailyVisitsPromises);
-
-    dailyVisitsResponses.forEach((response) => {
-      const hourlyCounts = Array(24).fill(0);
-      response.data.forEach((visit) => {
-        const timestamp = visit.lastActionTimestamp * 1000;
-        const hour = new Date(timestamp).getHours();
-        hourlyCounts[hour]++;
-      });
-      dailyHourlyCounts.push(hourlyCounts);
+    const response = await axios.get(`${MATOMO_API_URL}/index.php`, {
+      params: {
+        module: 'API',
+        method: 'VisitTime.getVisitInformationPerServerTime',
+        idSite: site,
+        period: 'range',
+        date: `${start},${end}`,
+        format: 'JSON',
+        token_auth: TOKEN
+      }
     });
 
+    const data = response.data;
+
+    // 0'dan 23'e kadar saatleri kapsayan dizi oluştur
     const hourlySums = Array(24).fill(0);
-    dailyHourlyCounts.forEach((dailyCounts) => {
-      dailyCounts.forEach((count, hour) => {
-        hourlySums[hour] += count;
-      });
+    data.forEach(item => {
+      const hour = parseInt(item.label);         // Saat (label: "0" - "23")
+      const count = parseInt(item.nb_visits);    // Ziyaret sayısı
+      if (!isNaN(hour) && hour >= 0 && hour <= 23) {
+        hourlySums[hour] = count;
+      }
     });
-
-    const dayCount = dailyHourlyCounts.length;
-    const averageHourlyVisits = hourlySums.map(total => total / dayCount);
 
     res.json({
       success: true,
       startDate: start,
       endDate: end,
-      hourlyVisits: averageHourlyVisits
+      hourlyVisits: hourlySums
     });
 
   } catch (error) {
     console.error('Saatlik ziyaret hatası:', error.message);
-    res.status(500).json({ success: false, message: 'Veri alınamadı', error: error.message });
+    res.status(500).json({
+      success: false,
+      message: 'Veri alınamadı',
+      error: error.message
+    });
   }
 });
 
@@ -648,8 +633,106 @@ app.get('/api/campaigns', async (req, res) => {
   }
 });
 
+app.get('/api/search-keyword-mapping', async (req, res) => {
+  try {
+    const siteId = req.query.siteId || SITE_ID;
+    const date = getDateParam(req);
 
+    console.log("Tarih aralığı:", date);
 
+    // 1. Site Search Keywords verisini al
+    const keywordsRes = await axios.get(`${MATOMO_API_URL}/index.php`, {
+      params: {
+        module: 'API',
+        method: 'Actions.getSiteSearchKeywords',
+        idSite: siteId,
+        period: 'range',
+        date,
+        format: 'JSON',
+        token_auth: TOKEN
+      }
+    });
+
+    const searchKeywords = keywordsRes.data.map(item => ({
+      label: item.label?.trim(),
+      nb_visits: item.nb_visits
+    }));
+
+    console.log("Toplam arama kelimesi:", searchKeywords.length);
+    console.log("İlk 5 arama kelimesi:", searchKeywords.slice(0, 5));
+
+    // 2. Searched event'lerini al
+    const eventsRes = await axios.get(`${MATOMO_API_URL}/index.php`, {
+      params: {
+        module: 'API',
+        method: 'Events.getName',  // Events.getName kullanacağız
+        idSite: siteId,
+        period: 'range',
+        date,
+        segment: 'eventAction==searched',  // eventAction==searched segmenti
+        format: 'JSON',
+        token_auth: TOKEN
+      }
+    });
+
+    // Debugging: eventsRes verisini kontrol edelim
+    console.log("Searched event verisi:", eventsRes.data);
+
+    const searchedEventsRaw = eventsRes.data.map(event => event.label?.trim());
+    const searchedEvents = searchedEventsRaw.filter(label => label && label.includes('->') && !label.startsWith('->'));
+
+    console.log("Toplam searched event:", searchedEvents.length);
+    console.log("İlk 5 searched event:", searchedEvents.slice(0, 5));
+
+    // 3. Eşleştirme
+    const matched = {};
+    const unmatched = [];
+
+    searchKeywords.forEach(item => {
+      const keyword = item.label;
+      const visits = item.nb_visits;
+
+      const matchedUnits = [];
+
+      searchedEvents.forEach(eventLabel => {
+        const [searchTerm, unit] = eventLabel.split('->').map(s => s.trim());
+
+        // Debugging: karşılaştırılan kelimeleri yaz
+        if (keyword && searchTerm) {
+          console.log(`Karşılaştır: "${keyword}" === "${searchTerm}" →`, keyword === searchTerm);
+        }
+
+        if (searchTerm === keyword) {
+          matchedUnits.push(unit);
+        }
+      });
+
+      if (matchedUnits.length > 0) {
+        matched[keyword] = {
+          nb_visits: visits,
+          units: matchedUnits
+        };
+      } else {
+        unmatched.push({ label: keyword, nb_visits: visits });
+      }
+    });
+
+    // 4. unmatched sıralama
+    unmatched.sort((a, b) => b.nb_visits - a.nb_visits);
+
+    console.log("Eşleşen arama kelimesi sayısı:", Object.keys(matched).length);
+    console.log("Eşleşmeyen arama kelimesi sayısı:", unmatched.length);
+
+    res.json({
+      matched,
+      unmatched
+    });
+
+  } catch (error) {
+    console.error("Eşleşme analizi yapılırken hata:", error.message);
+    res.status(500).json({ error: 'Eşleşme analizi başarısız oldu' });
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`Sunucu http://localhost:${PORT} adresinde çalışıyor.`);
