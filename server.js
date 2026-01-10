@@ -703,6 +703,121 @@ app.get('/api/campaigns', async (req, res) => {
   }
 });
 
+// =====================================================
+// Annual Summary Endpoints
+// =====================================================
+
+// Daily Visits - Günlük ziyaret sayıları
+app.get('/api/daily-visits', async (req, res) => {
+  try {
+    const { siteId, startDate, endDate } = req.query;
+    const site = siteId || SITE_ID;
+    const date = startDate && endDate ? `${startDate},${endDate}` : 'last30';
+
+    const response = await axios.get(`${MATOMO_API_URL}/index.php`, {
+      params: {
+        module: 'API',
+        method: 'VisitsSummary.get',
+        idSite: site,
+        period: 'day',
+        date,
+        format: 'JSON',
+        token_auth: TOKEN
+      }
+    });
+
+    // Transform data to array format
+    const dailyData = Object.entries(response.data).map(([date, data]) => ({
+      date,
+      visits: data.nb_visits || 0,
+      uniqueVisitors: data.nb_uniq_visitors || 0,
+      actions: data.nb_actions || 0,
+      avgTimeOnSite: data.avg_time_on_site || 0,
+      bounceRate: data.bounce_rate || '0%'
+    }));
+
+    res.json(dailyData);
+  } catch (error) {
+    console.error("Daily visits hatası:", error.message);
+    res.status(500).json({ error: 'Daily visits verisi alınamadı' });
+  }
+});
+
+// Day of Week Distribution - Haftanın günlerine göre dağılım
+app.get('/api/day-of-week', async (req, res) => {
+  try {
+    const { siteId, startDate, endDate } = req.query;
+    const site = siteId || SITE_ID;
+    const date = startDate && endDate ? `${startDate},${endDate}` : 'last30';
+
+    const response = await axios.get(`${MATOMO_API_URL}/index.php`, {
+      params: {
+        module: 'API',
+        method: 'VisitTime.getByDayOfWeek',
+        idSite: site,
+        period: 'range',
+        date,
+        format: 'JSON',
+        token_auth: TOKEN
+      }
+    });
+
+    // Matomo returns data indexed by day number (1=Monday, 7=Sunday)
+    const dayNames = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
+    
+    const dayOfWeekData = response.data.map((item, index) => ({
+      dayIndex: index + 1,
+      dayName: dayNames[index] || item.label,
+      visits: item.nb_visits || 0,
+      uniqueVisitors: item.nb_uniq_visitors || 0
+    }));
+
+    res.json(dayOfWeekData);
+  } catch (error) {
+    console.error("Day of week hatası:", error.message);
+    res.status(500).json({ error: 'Day of week verisi alınamadı' });
+  }
+});
+
+// Country Distribution - Ülkelere göre dağılım
+app.get('/api/country-distribution', async (req, res) => {
+  try {
+    const { siteId, startDate, endDate } = req.query;
+    const site = siteId || SITE_ID;
+    const date = startDate && endDate ? `${startDate},${endDate}` : 'last30';
+
+    const response = await axios.get(`${MATOMO_API_URL}/index.php`, {
+      params: {
+        module: 'API',
+        method: 'UserCountry.getCountry',
+        idSite: site,
+        period: 'range',
+        date,
+        format: 'JSON',
+        token_auth: TOKEN
+      }
+    });
+
+    const countryData = response.data.map(item => ({
+      country: item.label,
+      countryCode: item.code || '',
+      visits: item.nb_visits || 0,
+      uniqueVisitors: item.nb_uniq_visitors || 0,
+      actions: item.nb_actions || 0,
+      percentage: item.nb_visits_percentage || 0
+    }));
+
+    res.json(countryData);
+  } catch (error) {
+    console.error("Country distribution hatası:", error.message);
+    res.status(500).json({ error: 'Country distribution verisi alınamadı' });
+  }
+});
+
+// =====================================================
+// Health Check Endpoints
+// =====================================================
+
 // Health check endpoint for CapRover
 app.get('/', (req, res) => {
   res.status(200).json({ 
