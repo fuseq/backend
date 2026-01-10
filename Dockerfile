@@ -16,6 +16,6 @@ COPY . .
 # Port tanımla
 EXPOSE 3000
 
-# Uygulamayı başlat
-CMD ["npm", "start"]
+# Uygulamayı doğrudan node ile başlat (npm SIGTERM sorununu önler)
+CMD ["node", "server.js"]
 
