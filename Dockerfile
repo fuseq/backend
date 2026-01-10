@@ -13,8 +13,8 @@ RUN npm ci --only=production
 # Uygulama dosyalarını kopyala
 COPY . .
 
-# Port tanımla (CapRover otomatik olarak PORT env var'ı atar)
-EXPOSE 3001
+# Port tanımla (CapRover PORT 80 kullanır)
+EXPOSE 80
 
 # Uygulamayı başlat
 CMD ["npm", "start"]
