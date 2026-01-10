@@ -8,8 +8,8 @@ const PORT = process.env.PORT || 3000;
 
 // CORS configuration for CapRover deployment
 const allowedOrigins = [
-  'https://matomo-analytics-frontend.socket.com',
-  'http://matomo-analytics-frontend.socket.com',
+  'https://matomo-analytics-frontend.isohtel.com.tr',
+  'http://matomo-analytics-frontend.isohtel.com.tr',
   'http://localhost:5500', // Local development
   'http://localhost:8080', // Local development
   'http://127.0.0.1:5500'  // Local development
