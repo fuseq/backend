@@ -3,8 +3,8 @@ const axios = require('axios');
 const cors = require('cors');
 
 const app = express();
-// CapRover sets PORT env variable automatically, default to 80 for container
-const PORT = process.env.PORT || 80;
+// CapRover sets PORT env variable automatically
+const PORT = process.env.PORT || 3000;
 
 // CORS configuration for CapRover deployment
 const allowedOrigins = [
