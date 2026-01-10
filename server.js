@@ -703,8 +703,18 @@ app.get('/api/campaigns', async (req, res) => {
   }
 });
 
+// Health check endpoint for CapRover
+app.get('/', (req, res) => {
+  res.status(200).json({ 
+    status: 'ok', 
+    service: 'Matomo Analytics Backend',
+    timestamp: new Date().toISOString()
+  });
+});
 
-
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'healthy' });
+});
 
 app.listen(PORT, () => {
   console.log(`Sunucu http://localhost:${PORT} adresinde çalışıyor.`);
