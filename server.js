@@ -5,7 +5,29 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-app.use(cors());
+// CORS configuration for CapRover deployment
+const allowedOrigins = [
+  'https://matomo-analytics-frontend.socket.com',
+  'http://matomo-analytics-frontend.socket.com',
+  'http://localhost:5500', // Local development
+  'http://localhost:8080', // Local development
+  'http://127.0.0.1:5500'  // Local development
+];
+
+app.use(cors({
+  origin: function(origin, callback) {
+    // Allow requests with no origin (mobile apps, curl, etc)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      console.log('Blocked origin:', origin);
+      callback(null, true); // Still allow for now, change to false in production
+    }
+  },
+  credentials: true
+}));
 
 const MATOMO_API_URL = 'https://analytics.inmapper.com';
 const SITE_ID = '';
