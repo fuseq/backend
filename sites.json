@@ -1,0 +1,809 @@
+﻿{
+    "sites":  [
+                  {
+                      "id":  2,
+                      "name":  "Garanti BBVA Partners",
+                      "url":  "https://inmapper.com/garantipartners",
+                      "category":  "diger",
+                      "categoryName":  "Diğer",
+                      "categoryIcon":  "📍",
+                      "categoryColor":  "#95A5A6"
+                  },
+                  {
+                      "id":  8,
+                      "name":  "Trump",
+                      "url":  "https://inmapper.com/trump",
+                      "category":  "avm",
+                      "categoryName":  "AVM",
+                      "categoryIcon":  "🛍️",
+                      "categoryColor":  "#FF6B6B"
+                  },
+                  {
+                      "id":  15,
+                      "name":  "Kanyon",
+                      "url":  "https://inmapper.com/kanyon",
+                      "category":  "avm",
+                      "categoryName":  "AVM",
+                      "categoryIcon":  "🛍️",
+                      "categoryColor":  "#FF6B6B"
+                  },
+                  {
+                      "id":  16,
+                      "name":  "Zorlu Center / Web",
+                      "url":  "https://inmapper.com/zorlucenter",
+                      "category":  "avm",
+                      "categoryName":  "AVM",
+                      "categoryIcon":  "🛍️",
+                      "categoryColor":  "#FF6B6B"
+                  },
+                  {
+                      "id":  26,
+                      "name":  "Zorlu Center / Kiosk",
+                      "url":  "",
+                      "category":  "avm",
+                      "categoryName":  "AVM",
+                      "categoryIcon":  "🛍️",
+                      "categoryColor":  "#FF6B6B"
+                  },
+                  {
+                      "id":  30,
+                      "name":  "TK / ADB",
+                      "url":  "https://inmapper.com/tk/adb",
+                      "category":  "havalimani",
+                      "categoryName":  "Havalimanı",
+                      "categoryIcon":  "✈️",
+                      "categoryColor":  "#4ECDC4"
+                  },
+                  {
+                      "id":  32,
+                      "name":  "TK / SAW",
+                      "url":  "https://inmapper.com/tk/saw",
+                      "category":  "havalimani",
+                      "categoryName":  "Havalimanı",
+                      "categoryIcon":  "✈️",
+                      "categoryColor":  "#4ECDC4"
+                  },
+                  {
+                      "id":  37,
+                      "name":  "TK / IST",
+                      "url":  "https://inmapper.com/tk/isl",
+                      "category":  "havalimani",
+                      "categoryName":  "Havalimanı",
+                      "categoryIcon":  "✈️",
+                      "categoryColor":  "#4ECDC4"
+                  },
+                  {
+                      "id":  42,
+                      "name":  "ISG",
+                      "url":  "https://inmapper.com/105115103",
+                      "category":  "havalimani",
+                      "categoryName":  "Havalimanı",
+                      "categoryIcon":  "✈️",
+                      "categoryColor":  "#4ECDC4"
+                  },
+                  {
+                      "id":  50,
+                      "name":  "İstanbul Cevahir / Web+Mobil",
+                      "url":  "https://inmapper.com/istanbulcevahir",
+                      "category":  "avm",
+                      "categoryName":  "AVM",
+                      "categoryIcon":  "🛍️",
+                      "categoryColor":  "#FF6B6B"
+                  },
+                  {
+                      "id":  58,
+                      "name":  "Turkish Cargo / SmartIST",
+                      "url":  "https://inmapper.com/turkishcargo/smartist",
+                      "category":  "havalimani",
+                      "categoryName":  "Havalimanı",
+                      "categoryIcon":  "✈️",
+                      "categoryColor":  "#4ECDC4"
+                  },
+                  {
+                      "id":  83,
+                      "name":  "TK / Ana Sayfa",
+                      "url":  "https://inmapper.com/116107",
+                      "category":  "havalimani",
+                      "categoryName":  "Havalimanı",
+                      "categoryIcon":  "✈️",
+                      "categoryColor":  "#4ECDC4"
+                  },
+                  {
+                      "id":  91,
+                      "name":  "Galataport / App",
+                      "url":  "https://inmapper.com/galataport",
+                      "category":  "avm",
+                      "categoryName":  "AVM",
+                      "categoryIcon":  "🛍️",
+                      "categoryColor":  "#FF6B6B"
+                  },
+                  {
+                      "id":  94,
+                      "name":  "Büyükçekmece Belediyesi Merkez Bina",
+                      "url":  "https://inmapper.com/bbmerkezbina",
+                      "category":  "kamu",
+                      "categoryName":  "Kamu/Belediye",
+                      "categoryIcon":  "🏛️",
+                      "categoryColor":  "#1ABC9C"
+                  },
+                  {
+                      "id":  100,
+                      "name":  "DHMİ / Ana Sayfa",
+                      "url":  "https://seyyah.dhmi.gov.tr",
+                      "category":  "havalimani",
+                      "categoryName":  "Havalimanı",
+                      "categoryIcon":  "✈️",
+                      "categoryColor":  "#4ECDC4"
+                  },
+                  {
+                      "id":  157,
+                      "name":  "Beymen / Zorlu Center",
+                      "url":  "https://inmapper.com/beymen/zorlucenter",
+                      "category":  "magaza",
+                      "categoryName":  "Mağaza",
+                      "categoryIcon":  "👔",
+                      "categoryColor":  "#9B59B6"
+                  },
+                  {
+                      "id":  158,
+                      "name":  "Beymen / İstinyePark",
+                      "url":  "https://inmapper.com/beymen/istinyepark",
+                      "category":  "magaza",
+                      "categoryName":  "Mağaza",
+                      "categoryIcon":  "👔",
+                      "categoryColor":  "#9B59B6"
+                  },
+                  {
+                      "id":  159,
+                      "name":  "Beymen / Galataport İstanbul",
+                      "url":  "https://inmapper.com/beymen/galataport",
+                      "category":  "magaza",
+                      "categoryName":  "Mağaza",
+                      "categoryIcon":  "👔",
+                      "categoryColor":  "#9B59B6"
+                  },
+                  {
+                      "id":  160,
+                      "name":  "Beymen / Akasya",
+                      "url":  "https://inmapper.com/beymen/akasya",
+                      "category":  "magaza",
+                      "categoryName":  "Mağaza",
+                      "categoryIcon":  "👔",
+                      "categoryColor":  "#9B59B6"
+                  },
+                  {
+                      "id":  161,
+                      "name":  "Beymen / Suadiye",
+                      "url":  "https://inmapper.com/beymen/suadiye",
+                      "category":  "magaza",
+                      "categoryName":  "Mağaza",
+                      "categoryIcon":  "👔",
+                      "categoryColor":  "#9B59B6"
+                  },
+                  {
+                      "id":  162,
+                      "name":  "Beymen / Nişantaşı",
+                      "url":  "https://inmapper.com/beymen/nisantasi",
+                      "category":  "magaza",
+                      "categoryName":  "Mağaza",
+                      "categoryIcon":  "👔",
+                      "categoryColor":  "#9B59B6"
+                  },
+                  {
+                      "id":  163,
+                      "name":  "Beymen / İstinyePark İzmir",
+                      "url":  "https://inmapper.com/beymen/istinyeparkizmir",
+                      "category":  "magaza",
+                      "categoryName":  "Mağaza",
+                      "categoryIcon":  "👔",
+                      "categoryColor":  "#9B59B6"
+                  },
+                  {
+                      "id":  172,
+                      "name":  "TK / AYT",
+                      "url":  "https://inmapper.com/tk/ayt",
+                      "category":  "havalimani",
+                      "categoryName":  "Havalimanı",
+                      "categoryIcon":  "✈️",
+                      "categoryColor":  "#4ECDC4"
+                  },
+                  {
+                      "id":  173,
+                      "name":  "TK / BJV",
+                      "url":  "https://inmapper.com/tk/bjv",
+                      "category":  "havalimani",
+                      "categoryName":  "Havalimanı",
+                      "categoryIcon":  "✈️",
+                      "categoryColor":  "#4ECDC4"
+                  },
+                  {
+                      "id":  174,
+                      "name":  "TK / DLM",
+                      "url":  "https://inmapper.com/tk/dlm",
+                      "category":  "havalimani",
+                      "categoryName":  "Havalimanı",
+                      "categoryIcon":  "✈️",
+                      "categoryColor":  "#4ECDC4"
+                  },
+                  {
+                      "id":  175,
+                      "name":  "TK / ESB",
+                      "url":  "https://inmapper.com/tk/esb",
+                      "category":  "havalimani",
+                      "categoryName":  "Havalimanı",
+                      "categoryIcon":  "✈️",
+                      "categoryColor":  "#4ECDC4"
+                  },
+                  {
+                      "id":  178,
+                      "name":  "İstanbul Cevahir / QR",
+                      "url":  "https://inmapper.com/istanbulcevahir",
+                      "category":  "avm",
+                      "categoryName":  "AVM",
+                      "categoryIcon":  "🛍️",
+                      "categoryColor":  "#FF6B6B"
+                  },
+                  {
+                      "id":  183,
+                      "name":  "TPASC",
+                      "url":  "https://inmapper.com/tpasc",
+                      "category":  "diger",
+                      "categoryName":  "Diğer",
+                      "categoryIcon":  "📍",
+                      "categoryColor":  "#95A5A6"
+                  },
+                  {
+                      "id":  190,
+                      "name":  "Tema World",
+                      "url":  "https://inmapper.com/temaworld",
+                      "category":  "diger",
+                      "categoryName":  "Diğer",
+                      "categoryIcon":  "📍",
+                      "categoryColor":  "#95A5A6"
+                  },
+                  {
+                      "id":  191,
+                      "name":  "Win Eurasia 2025",
+                      "url":  "https://inmapper.com/win-eurasia/2025",
+                      "category":  "fuar",
+                      "categoryName":  "Fuar",
+                      "categoryIcon":  "🎪",
+                      "categoryColor":  "#F39C12"
+                  },
+                  {
+                      "id":  192,
+                      "name":  "Automechanika Istanbul 2025",
+                      "url":  "http://inmapper.com/automechanika-istanbul",
+                      "category":  "fuar",
+                      "categoryName":  "Fuar",
+                      "categoryIcon":  "🎪",
+                      "categoryColor":  "#F39C12"
+                  },
+                  {
+                      "id":  193,
+                      "name":  "TK / Sedat Şekerci Kampüsü",
+                      "url":  "https://inmapper.com/turkishairlines/ucusegitimbaskanligi/sedatsekercikampusu",
+                      "category":  "egitim",
+                      "categoryName":  "Eğitim/Kampüs",
+                      "categoryIcon":  "🎓",
+                      "categoryColor":  "#3498DB"
+                  },
+                  {
+                      "id":  194,
+                      "name":  "TK / Merkez Kampüs",
+                      "url":  "https://inmapper.com/turkishairlines/ucusegitimbaskanligi/merkezkampusu",
+                      "category":  "egitim",
+                      "categoryName":  "Eğitim/Kampüs",
+                      "categoryIcon":  "🎓",
+                      "categoryColor":  "#3498DB"
+                  },
+                  {
+                      "id":  195,
+                      "name":  "Zorlu Center / Mobil",
+                      "url":  "http://inmapper.com/zorlucenter/mobil",
+                      "category":  "avm",
+                      "categoryName":  "AVM",
+                      "categoryIcon":  "🛍️",
+                      "categoryColor":  "#FF6B6B"
+                  },
+                  {
+                      "id":  196,
+                      "name":  "ISK SODEX 2025",
+                      "url":  "https://inmapper.com/sodex/2025",
+                      "category":  "fuar",
+                      "categoryName":  "Fuar",
+                      "categoryIcon":  "🎪",
+                      "categoryColor":  "#F39C12"
+                  },
+                  {
+                      "id":  198,
+                      "name":  "Beymen / Tersane",
+                      "url":  "https://inmapper.com/beymen/tersane",
+                      "category":  "magaza",
+                      "categoryName":  "Mağaza",
+                      "categoryIcon":  "👔",
+                      "categoryColor":  "#9B59B6"
+                  },
+                  {
+                      "id":  199,
+                      "name":  "Terminal Kadıköy",
+                      "url":  "https://inmapper.com/terminalkadikoy",
+                      "category":  "avm",
+                      "categoryName":  "AVM",
+                      "categoryIcon":  "🛍️",
+                      "categoryColor":  "#FF6B6B"
+                  }
+              ],
+    "categories":  {
+                       "avm":  {
+                                   "name":  "AVM",
+                                   "icon":  "🛍️",
+                                   "color":  "#FF6B6B",
+                                   "sites":  [
+                                                 16,
+                                                 26,
+                                                 195,
+                                                 15,
+                                                 50,
+                                                 178,
+                                                 8,
+                                                 91,
+                                                 199
+                                             ]
+                               },
+                       "havalimani":  {
+                                          "name":  "Havalimanı",
+                                          "icon":  "✈️",
+                                          "color":  "#4ECDC4",
+                                          "sites":  [
+                                                        37,
+                                                        32,
+                                                        30,
+                                                        172,
+                                                        173,
+                                                        174,
+                                                        175,
+                                                        83,
+                                                        42,
+                                                        100,
+                                                        58
+                                                    ]
+                                      },
+                       "magaza":  {
+                                      "name":  "Mağaza",
+                                      "icon":  "👔",
+                                      "color":  "#9B59B6",
+                                      "sites":  [
+                                                    157,
+                                                    158,
+                                                    159,
+                                                    160,
+                                                    161,
+                                                    162,
+                                                    163,
+                                                    198
+                                                ]
+                                  },
+                       "fuar":  {
+                                    "name":  "Fuar",
+                                    "icon":  "🎪",
+                                    "color":  "#F39C12",
+                                    "sites":  [
+                                                  191,
+                                                  192,
+                                                  196
+                                              ]
+                                },
+                       "egitim":  {
+                                      "name":  "Eğitim/Kampüs",
+                                      "icon":  "🎓",
+                                      "color":  "#3498DB",
+                                      "sites":  [
+                                                    193,
+                                                    194
+                                                ]
+                                  },
+                       "kamu":  {
+                                    "name":  "Kamu/Belediye",
+                                    "icon":  "🏛️",
+                                    "color":  "#1ABC9C",
+                                    "sites":  [
+                                                  94
+                                              ]
+                                },
+                       "diger":  {
+                                     "name":  "Diğer",
+                                     "icon":  "📍",
+                                     "color":  "#95A5A6",
+                                     "sites":  [
+                                                   2,
+                                                   183,
+                                                   190
+                                               ]
+                                 }
+                   },
+    "grouped":  {
+                    "avm":  {
+                                "name":  "AVM",
+                                "icon":  "🛍️",
+                                "color":  "#FF6B6B",
+                                "sites":  [
+                                              {
+                                                  "id":  8,
+                                                  "name":  "Trump",
+                                                  "url":  "https://inmapper.com/trump",
+                                                  "category":  "avm",
+                                                  "categoryName":  "AVM",
+                                                  "categoryIcon":  "🛍️",
+                                                  "categoryColor":  "#FF6B6B"
+                                              },
+                                              {
+                                                  "id":  15,
+                                                  "name":  "Kanyon",
+                                                  "url":  "https://inmapper.com/kanyon",
+                                                  "category":  "avm",
+                                                  "categoryName":  "AVM",
+                                                  "categoryIcon":  "🛍️",
+                                                  "categoryColor":  "#FF6B6B"
+                                              },
+                                              {
+                                                  "id":  16,
+                                                  "name":  "Zorlu Center / Web",
+                                                  "url":  "https://inmapper.com/zorlucenter",
+                                                  "category":  "avm",
+                                                  "categoryName":  "AVM",
+                                                  "categoryIcon":  "🛍️",
+                                                  "categoryColor":  "#FF6B6B"
+                                              },
+                                              {
+                                                  "id":  26,
+                                                  "name":  "Zorlu Center / Kiosk",
+                                                  "url":  "",
+                                                  "category":  "avm",
+                                                  "categoryName":  "AVM",
+                                                  "categoryIcon":  "🛍️",
+                                                  "categoryColor":  "#FF6B6B"
+                                              },
+                                              {
+                                                  "id":  50,
+                                                  "name":  "İstanbul Cevahir / Web+Mobil",
+                                                  "url":  "https://inmapper.com/istanbulcevahir",
+                                                  "category":  "avm",
+                                                  "categoryName":  "AVM",
+                                                  "categoryIcon":  "🛍️",
+                                                  "categoryColor":  "#FF6B6B"
+                                              },
+                                              {
+                                                  "id":  91,
+                                                  "name":  "Galataport / App",
+                                                  "url":  "https://inmapper.com/galataport",
+                                                  "category":  "avm",
+                                                  "categoryName":  "AVM",
+                                                  "categoryIcon":  "🛍️",
+                                                  "categoryColor":  "#FF6B6B"
+                                              },
+                                              {
+                                                  "id":  178,
+                                                  "name":  "İstanbul Cevahir / QR",
+                                                  "url":  "https://inmapper.com/istanbulcevahir",
+                                                  "category":  "avm",
+                                                  "categoryName":  "AVM",
+                                                  "categoryIcon":  "🛍️",
+                                                  "categoryColor":  "#FF6B6B"
+                                              },
+                                              {
+                                                  "id":  195,
+                                                  "name":  "Zorlu Center / Mobil",
+                                                  "url":  "http://inmapper.com/zorlucenter/mobil",
+                                                  "category":  "avm",
+                                                  "categoryName":  "AVM",
+                                                  "categoryIcon":  "🛍️",
+                                                  "categoryColor":  "#FF6B6B"
+                                              },
+                                              {
+                                                  "id":  199,
+                                                  "name":  "Terminal Kadıköy",
+                                                  "url":  "https://inmapper.com/terminalkadikoy",
+                                                  "category":  "avm",
+                                                  "categoryName":  "AVM",
+                                                  "categoryIcon":  "🛍️",
+                                                  "categoryColor":  "#FF6B6B"
+                                              }
+                                          ]
+                            },
+                    "havalimani":  {
+                                       "name":  "Havalimanı",
+                                       "icon":  "✈️",
+                                       "color":  "#4ECDC4",
+                                       "sites":  [
+                                                     {
+                                                         "id":  30,
+                                                         "name":  "TK / ADB",
+                                                         "url":  "https://inmapper.com/tk/adb",
+                                                         "category":  "havalimani",
+                                                         "categoryName":  "Havalimanı",
+                                                         "categoryIcon":  "✈️",
+                                                         "categoryColor":  "#4ECDC4"
+                                                     },
+                                                     {
+                                                         "id":  32,
+                                                         "name":  "TK / SAW",
+                                                         "url":  "https://inmapper.com/tk/saw",
+                                                         "category":  "havalimani",
+                                                         "categoryName":  "Havalimanı",
+                                                         "categoryIcon":  "✈️",
+                                                         "categoryColor":  "#4ECDC4"
+                                                     },
+                                                     {
+                                                         "id":  37,
+                                                         "name":  "TK / IST",
+                                                         "url":  "https://inmapper.com/tk/isl",
+                                                         "category":  "havalimani",
+                                                         "categoryName":  "Havalimanı",
+                                                         "categoryIcon":  "✈️",
+                                                         "categoryColor":  "#4ECDC4"
+                                                     },
+                                                     {
+                                                         "id":  42,
+                                                         "name":  "ISG",
+                                                         "url":  "https://inmapper.com/105115103",
+                                                         "category":  "havalimani",
+                                                         "categoryName":  "Havalimanı",
+                                                         "categoryIcon":  "✈️",
+                                                         "categoryColor":  "#4ECDC4"
+                                                     },
+                                                     {
+                                                         "id":  58,
+                                                         "name":  "Turkish Cargo / SmartIST",
+                                                         "url":  "https://inmapper.com/turkishcargo/smartist",
+                                                         "category":  "havalimani",
+                                                         "categoryName":  "Havalimanı",
+                                                         "categoryIcon":  "✈️",
+                                                         "categoryColor":  "#4ECDC4"
+                                                     },
+                                                     {
+                                                         "id":  83,
+                                                         "name":  "TK / Ana Sayfa",
+                                                         "url":  "https://inmapper.com/116107",
+                                                         "category":  "havalimani",
+                                                         "categoryName":  "Havalimanı",
+                                                         "categoryIcon":  "✈️",
+                                                         "categoryColor":  "#4ECDC4"
+                                                     },
+                                                     {
+                                                         "id":  100,
+                                                         "name":  "DHMİ / Ana Sayfa",
+                                                         "url":  "https://seyyah.dhmi.gov.tr",
+                                                         "category":  "havalimani",
+                                                         "categoryName":  "Havalimanı",
+                                                         "categoryIcon":  "✈️",
+                                                         "categoryColor":  "#4ECDC4"
+                                                     },
+                                                     {
+                                                         "id":  172,
+                                                         "name":  "TK / AYT",
+                                                         "url":  "https://inmapper.com/tk/ayt",
+                                                         "category":  "havalimani",
+                                                         "categoryName":  "Havalimanı",
+                                                         "categoryIcon":  "✈️",
+                                                         "categoryColor":  "#4ECDC4"
+                                                     },
+                                                     {
+                                                         "id":  173,
+                                                         "name":  "TK / BJV",
+                                                         "url":  "https://inmapper.com/tk/bjv",
+                                                         "category":  "havalimani",
+                                                         "categoryName":  "Havalimanı",
+                                                         "categoryIcon":  "✈️",
+                                                         "categoryColor":  "#4ECDC4"
+                                                     },
+                                                     {
+                                                         "id":  174,
+                                                         "name":  "TK / DLM",
+                                                         "url":  "https://inmapper.com/tk/dlm",
+                                                         "category":  "havalimani",
+                                                         "categoryName":  "Havalimanı",
+                                                         "categoryIcon":  "✈️",
+                                                         "categoryColor":  "#4ECDC4"
+                                                     },
+                                                     {
+                                                         "id":  175,
+                                                         "name":  "TK / ESB",
+                                                         "url":  "https://inmapper.com/tk/esb",
+                                                         "category":  "havalimani",
+                                                         "categoryName":  "Havalimanı",
+                                                         "categoryIcon":  "✈️",
+                                                         "categoryColor":  "#4ECDC4"
+                                                     }
+                                                 ]
+                                   },
+                    "magaza":  {
+                                   "name":  "Mağaza",
+                                   "icon":  "👔",
+                                   "color":  "#9B59B6",
+                                   "sites":  [
+                                                 {
+                                                     "id":  157,
+                                                     "name":  "Beymen / Zorlu Center",
+                                                     "url":  "https://inmapper.com/beymen/zorlucenter",
+                                                     "category":  "magaza",
+                                                     "categoryName":  "Mağaza",
+                                                     "categoryIcon":  "👔",
+                                                     "categoryColor":  "#9B59B6"
+                                                 },
+                                                 {
+                                                     "id":  158,
+                                                     "name":  "Beymen / İstinyePark",
+                                                     "url":  "https://inmapper.com/beymen/istinyepark",
+                                                     "category":  "magaza",
+                                                     "categoryName":  "Mağaza",
+                                                     "categoryIcon":  "👔",
+                                                     "categoryColor":  "#9B59B6"
+                                                 },
+                                                 {
+                                                     "id":  159,
+                                                     "name":  "Beymen / Galataport İstanbul",
+                                                     "url":  "https://inmapper.com/beymen/galataport",
+                                                     "category":  "magaza",
+                                                     "categoryName":  "Mağaza",
+                                                     "categoryIcon":  "👔",
+                                                     "categoryColor":  "#9B59B6"
+                                                 },
+                                                 {
+                                                     "id":  160,
+                                                     "name":  "Beymen / Akasya",
+                                                     "url":  "https://inmapper.com/beymen/akasya",
+                                                     "category":  "magaza",
+                                                     "categoryName":  "Mağaza",
+                                                     "categoryIcon":  "👔",
+                                                     "categoryColor":  "#9B59B6"
+                                                 },
+                                                 {
+                                                     "id":  161,
+                                                     "name":  "Beymen / Suadiye",
+                                                     "url":  "https://inmapper.com/beymen/suadiye",
+                                                     "category":  "magaza",
+                                                     "categoryName":  "Mağaza",
+                                                     "categoryIcon":  "👔",
+                                                     "categoryColor":  "#9B59B6"
+                                                 },
+                                                 {
+                                                     "id":  162,
+                                                     "name":  "Beymen / Nişantaşı",
+                                                     "url":  "https://inmapper.com/beymen/nisantasi",
+                                                     "category":  "magaza",
+                                                     "categoryName":  "Mağaza",
+                                                     "categoryIcon":  "👔",
+                                                     "categoryColor":  "#9B59B6"
+                                                 },
+                                                 {
+                                                     "id":  163,
+                                                     "name":  "Beymen / İstinyePark İzmir",
+                                                     "url":  "https://inmapper.com/beymen/istinyeparkizmir",
+                                                     "category":  "magaza",
+                                                     "categoryName":  "Mağaza",
+                                                     "categoryIcon":  "👔",
+                                                     "categoryColor":  "#9B59B6"
+                                                 },
+                                                 {
+                                                     "id":  198,
+                                                     "name":  "Beymen / Tersane",
+                                                     "url":  "https://inmapper.com/beymen/tersane",
+                                                     "category":  "magaza",
+                                                     "categoryName":  "Mağaza",
+                                                     "categoryIcon":  "👔",
+                                                     "categoryColor":  "#9B59B6"
+                                                 }
+                                             ]
+                               },
+                    "fuar":  {
+                                 "name":  "Fuar",
+                                 "icon":  "🎪",
+                                 "color":  "#F39C12",
+                                 "sites":  [
+                                               {
+                                                   "id":  191,
+                                                   "name":  "Win Eurasia 2025",
+                                                   "url":  "https://inmapper.com/win-eurasia/2025",
+                                                   "category":  "fuar",
+                                                   "categoryName":  "Fuar",
+                                                   "categoryIcon":  "🎪",
+                                                   "categoryColor":  "#F39C12"
+                                               },
+                                               {
+                                                   "id":  192,
+                                                   "name":  "Automechanika Istanbul 2025",
+                                                   "url":  "http://inmapper.com/automechanika-istanbul",
+                                                   "category":  "fuar",
+                                                   "categoryName":  "Fuar",
+                                                   "categoryIcon":  "🎪",
+                                                   "categoryColor":  "#F39C12"
+                                               },
+                                               {
+                                                   "id":  196,
+                                                   "name":  "ISK SODEX 2025",
+                                                   "url":  "https://inmapper.com/sodex/2025",
+                                                   "category":  "fuar",
+                                                   "categoryName":  "Fuar",
+                                                   "categoryIcon":  "🎪",
+                                                   "categoryColor":  "#F39C12"
+                                               }
+                                           ]
+                             },
+                    "egitim":  {
+                                   "name":  "Eğitim/Kampüs",
+                                   "icon":  "🎓",
+                                   "color":  "#3498DB",
+                                   "sites":  [
+                                                 {
+                                                     "id":  193,
+                                                     "name":  "TK / Sedat Şekerci Kampüsü",
+                                                     "url":  "https://inmapper.com/turkishairlines/ucusegitimbaskanligi/sedatsekercikampusu",
+                                                     "category":  "egitim",
+                                                     "categoryName":  "Eğitim/Kampüs",
+                                                     "categoryIcon":  "🎓",
+                                                     "categoryColor":  "#3498DB"
+                                                 },
+                                                 {
+                                                     "id":  194,
+                                                     "name":  "TK / Merkez Kampüs",
+                                                     "url":  "https://inmapper.com/turkishairlines/ucusegitimbaskanligi/merkezkampusu",
+                                                     "category":  "egitim",
+                                                     "categoryName":  "Eğitim/Kampüs",
+                                                     "categoryIcon":  "🎓",
+                                                     "categoryColor":  "#3498DB"
+                                                 }
+                                             ]
+                               },
+                    "kamu":  {
+                                 "name":  "Kamu/Belediye",
+                                 "icon":  "🏛️",
+                                 "color":  "#1ABC9C",
+                                 "sites":  [
+                                               {
+                                                   "id":  94,
+                                                   "name":  "Büyükçekmece Belediyesi Merkez Bina",
+                                                   "url":  "https://inmapper.com/bbmerkezbina",
+                                                   "category":  "kamu",
+                                                   "categoryName":  "Kamu/Belediye",
+                                                   "categoryIcon":  "🏛️",
+                                                   "categoryColor":  "#1ABC9C"
+                                               }
+                                           ]
+                             },
+                    "diger":  {
+                                  "name":  "Diğer",
+                                  "icon":  "📍",
+                                  "color":  "#95A5A6",
+                                  "sites":  [
+                                                {
+                                                    "id":  2,
+                                                    "name":  "Garanti BBVA Partners",
+                                                    "url":  "https://inmapper.com/garantipartners",
+                                                    "category":  "diger",
+                                                    "categoryName":  "Diğer",
+                                                    "categoryIcon":  "📍",
+                                                    "categoryColor":  "#95A5A6"
+                                                },
+                                                {
+                                                    "id":  183,
+                                                    "name":  "TPASC",
+                                                    "url":  "https://inmapper.com/tpasc",
+                                                    "category":  "diger",
+                                                    "categoryName":  "Diğer",
+                                                    "categoryIcon":  "📍",
+                                                    "categoryColor":  "#95A5A6"
+                                                },
+                                                {
+                                                    "id":  190,
+                                                    "name":  "Tema World",
+                                                    "url":  "https://inmapper.com/temaworld",
+                                                    "category":  "diger",
+                                                    "categoryName":  "Diğer",
+                                                    "categoryIcon":  "📍",
+                                                    "categoryColor":  "#95A5A6"
+                                                }
+                                            ]
+                              }
+                }
+}
