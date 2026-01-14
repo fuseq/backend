@@ -708,6 +708,7 @@ app.get('/api/campaigns', async (req, res) => {
 // =====================================================
 
 // Daily Visits - Günlük ziyaret sayıları
+// Returns object format: { "2025-01-01": 123, "2025-01-02": 456 }
 app.get('/api/daily-visits', async (req, res) => {
   try {
     const { siteId, startDate, endDate } = req.query;
@@ -726,17 +727,14 @@ app.get('/api/daily-visits', async (req, res) => {
       }
     });
 
-    // Transform data to array format
-    const dailyData = Object.entries(response.data).map(([date, data]) => ({
-      date,
-      visits: data.nb_visits || 0,
-      uniqueVisitors: data.nb_uniq_visitors || 0,
-      actions: data.nb_actions || 0,
-      avgTimeOnSite: data.avg_time_on_site || 0,
-      bounceRate: data.bounce_rate || '0%'
-    }));
+    // Transform data to object format: { "date": visits }
+    // Frontend expects this format for daily visits
+    const dailyVisits = {};
+    Object.entries(response.data).forEach(([dateKey, data]) => {
+      dailyVisits[dateKey] = data.nb_visits || 0;
+    });
 
-    res.json(dailyData);
+    res.json(dailyVisits);
   } catch (error) {
     console.error("Daily visits hatası:", error.message);
     res.status(500).json({ error: 'Daily visits verisi alınamadı' });
