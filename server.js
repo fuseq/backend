@@ -64,19 +64,25 @@ const SITE_CATEGORIES = {
     name: 'Eğitim/Kampüs',
     icon: '🎓',
     color: '#3498DB',
-    sites: [193, 194]
+    sites: [86, 193, 194]
   },
   kamu: {
     name: 'Kamu/Belediye',
     icon: '🏛️',
     color: '#1ABC9C',
-    sites: [94]
+    sites: [2, 94]
+  },
+  spor: {
+    name: 'Spor Tesisleri',
+    icon: '🏟️',
+    color: '#E74C3C',
+    sites: [183]
   },
   diger: {
     name: 'Diğer',
     icon: '📍',
     color: '#95A5A6',
-    sites: [2, 183, 190]
+    sites: []
   }
 };
 
@@ -708,7 +714,6 @@ app.get('/api/campaigns', async (req, res) => {
 // =====================================================
 
 // Daily Visits - Günlük ziyaret sayıları
-// Returns object format: { "2025-01-01": 123, "2025-01-02": 456 }
 app.get('/api/daily-visits', async (req, res) => {
   try {
     const { siteId, startDate, endDate } = req.query;
@@ -727,14 +732,17 @@ app.get('/api/daily-visits', async (req, res) => {
       }
     });
 
-    // Transform data to object format: { "date": visits }
-    // Frontend expects this format for daily visits
-    const dailyVisits = {};
-    Object.entries(response.data).forEach(([dateKey, data]) => {
-      dailyVisits[dateKey] = data.nb_visits || 0;
-    });
+    // Transform data to array format
+    const dailyData = Object.entries(response.data).map(([date, data]) => ({
+      date,
+      visits: data.nb_visits || 0,
+      uniqueVisitors: data.nb_uniq_visitors || 0,
+      actions: data.nb_actions || 0,
+      avgTimeOnSite: data.avg_time_on_site || 0,
+      bounceRate: data.bounce_rate || '0%'
+    }));
 
-    res.json(dailyVisits);
+    res.json(dailyData);
   } catch (error) {
     console.error("Daily visits hatası:", error.message);
     res.status(500).json({ error: 'Daily visits verisi alınamadı' });
@@ -809,6 +817,101 @@ app.get('/api/country-distribution', async (req, res) => {
   } catch (error) {
     console.error("Country distribution hatası:", error.message);
     res.status(500).json({ error: 'Country distribution verisi alınamadı' });
+  }
+});
+
+// =====================================================
+// Annual Trend - Yıllık bazda karşılaştırmalı veriler
+// =====================================================
+
+app.get('/api/annual-trend', async (req, res) => {
+  try {
+    const { siteId, startYear, endYear } = req.query;
+    const site = siteId || SITE_ID;
+    const fromYear = parseInt(startYear) || 2022;
+    const currentYear = parseInt(endYear) || new Date().getFullYear();
+    
+    const yearlyData = [];
+    
+    for (let year = fromYear; year <= currentYear; year++) {
+      const dateRange = `${year}-01-01,${year}-12-31`;
+      
+      try {
+        // Use period=month to get monthly breakdowns - much more resilient than period=year/range
+        // Matomo sometimes returns 500 for period=range/year on certain site/year combinations
+        const response = await axios.get(`${MATOMO_API_URL}/index.php`, {
+          params: {
+            module: 'API',
+            method: 'VisitsSummary.get',
+            idSite: site,
+            period: 'month',
+            date: dateRange,
+            format: 'JSON',
+            token_auth: TOKEN
+          },
+          timeout: 30000
+        });
+        
+        const monthlyData = response.data;
+        
+        // Aggregate monthly data for the year
+        let visits = 0, uniqueVisitors = 0, actions = 0, avgTimeOnSite = 0, bounceRate = 0;
+        let monthCount = 0;
+        
+        if (monthlyData && typeof monthlyData === 'object') {
+          // period=month returns: { "2023-01-01": { nb_visits: X, ... }, "2023-02-01": { ... }, ... }
+          const monthEntries = Array.isArray(monthlyData) ? monthlyData : Object.values(monthlyData);
+          
+          monthEntries.forEach(mData => {
+            if (mData && typeof mData === 'object' && !Array.isArray(mData) && mData.nb_visits !== undefined) {
+              visits += mData.nb_visits || 0;
+              uniqueVisitors += mData.nb_uniq_visitors || 0;
+              actions += mData.nb_actions || 0;
+              avgTimeOnSite += mData.avg_time_on_site || 0;
+              bounceRate += parseFloat(mData.bounce_rate) || 0;
+              if (mData.nb_visits > 0) monthCount++;
+            }
+          });
+        }
+        
+        if (monthCount > 0) {
+          avgTimeOnSite = Math.round(avgTimeOnSite / monthCount);
+          bounceRate = parseFloat((bounceRate / monthCount).toFixed(1));
+        }
+        
+        yearlyData.push({
+          year,
+          visits,
+          uniqueVisitors,
+          actions,
+          interactions: actions, // nb_actions = total actions (same metric as annual summary's VisitsSummary.getActions)
+          avgTimeOnSite,
+          bounceRate
+        });
+        
+        console.log(`Year ${year} site ${site}: visits=${visits}, actions=${actions}, months=${monthCount}`);
+      } catch (yearError) {
+        console.warn(`Year ${year} data fetch failed for site ${site}:`, yearError.message);
+        yearlyData.push({
+          year,
+          visits: 0,
+          uniqueVisitors: 0,
+          actions: 0,
+          interactions: 0,
+          avgTimeOnSite: 0,
+          bounceRate: 0
+        });
+      }
+    }
+
+    // Find the first year with actual data
+    const firstDataIndex = yearlyData.findIndex(y => y.visits > 0);
+    const filteredData = firstDataIndex >= 0 ? yearlyData.slice(firstDataIndex) : yearlyData;
+
+    res.json(filteredData);
+  } catch (error) {
+    console.error('Annual trend error:', error.message);
+    res.status(500).json({ error: 'Yıllık trend verisi alınamadı' });
   }
 });
 
